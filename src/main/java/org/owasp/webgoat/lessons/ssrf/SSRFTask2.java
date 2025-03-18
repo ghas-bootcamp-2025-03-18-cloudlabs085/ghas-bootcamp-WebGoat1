@@ -23,6 +23,7 @@
 package org.owasp.webgoat.lessons.ssrf;
 
 import java.io.IOException;
+import java.util.List;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -45,8 +46,10 @@ public class SSRFTask2 extends AssignmentEndpoint {
     return furBall(url);
   }
 
+  private static final List<String> ALLOWED_URLS = List.of("http://ifconfig.pro");
+
   protected AttackResult furBall(String url) {
-    if (url.matches("http://ifconfig.pro")) {
+    if (ALLOWED_URLS.contains(url)) {
       String html;
       try (InputStream in = new URL(url).openStream()) {
         html =
